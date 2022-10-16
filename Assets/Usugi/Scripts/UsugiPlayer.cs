@@ -48,7 +48,7 @@ public class UsugiPlayer : MonoBehaviour
     {
         ReadInput();
 
-        FootSound();
+        //FootSound();
 
         ChangeWeapon();
 
