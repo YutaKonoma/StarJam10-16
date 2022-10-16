@@ -41,6 +41,7 @@ public class Tree : MonoBehaviour
         else if(_grow1 == true)
         {
             _grow2 = true;
+            this.transform.position = new Vector3(transform.position.x, -2.28f, transform.position.z);
             _treeRenderer.sprite = _tree2;
             StopCoroutine(nameof(Deading));
             StartCoroutine(nameof(Deading));
