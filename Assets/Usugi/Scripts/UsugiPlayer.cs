@@ -26,6 +26,7 @@ public class UsugiPlayer : MonoBehaviour
     [SerializeField] GameObject _onoColider;
     [SerializeField] Ono _onoScripts;
     [SerializeField] GameObject _hitEffect;
+    [SerializeField] Animator _animator;
 
     [Header("‰¹")]
     [SerializeField] AudioClip _waterSound;
@@ -125,8 +126,10 @@ public class UsugiPlayer : MonoBehaviour
     IEnumerator StunCoolTime()
     {
         _hitEffect.SetActive(true);
+        _animator.SetBool("stun", true);
         yield return new WaitForSeconds(_stunTime);
         _hitEffect.SetActive(false);
+        _animator.SetBool("stun", false);
         _stun = false;
     }
 
