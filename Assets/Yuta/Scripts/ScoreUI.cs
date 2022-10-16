@@ -10,7 +10,7 @@ public class ScoreUI : MonoBehaviour
     Image _resultPanel;
 
     [SerializeField]
-    int _score;
+    float _score;
 
     [SerializeField]
     Text _scoreText;
@@ -18,10 +18,13 @@ public class ScoreUI : MonoBehaviour
     public void Awake()
     {
         _resultPanel.gameObject.SetActive(false);
+        _score = UsugiGameManager._score;
+        _scoreText.text = "合計スコア:" + _score.ToString();
     }
 
-    public void ChangeText(float _score)
+    public void ChangeText()
     {
+        _score = UsugiGameManager._score;
         _scoreText.text =  "合計スコア:" + _score.ToString();
     }
 }
