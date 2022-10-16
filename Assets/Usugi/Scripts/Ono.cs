@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Ono : MonoBehaviour
 {
-    [SerializeField] List<GameObject> _trees;
+    [SerializeField] List<GameObject> _trees = new();
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

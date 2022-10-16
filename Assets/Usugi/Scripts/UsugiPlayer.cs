@@ -25,18 +25,30 @@ public class UsugiPlayer : MonoBehaviour
     [SerializeField] GameObject _wateringCan;
     [SerializeField] GameObject _onoColider;
     [SerializeField] Ono _onoScripts;
+    [SerializeField] GameObject _hitEffect;
 
-    float _inputY;
+    [Header("‰¹")]
+    [SerializeField] AudioClip _waterSound;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _footStep;
+    [SerializeField] AudioClip _cutSound;
+    [SerializeField] AudioSource _footSource;
+
+    [SerializeField] float _inputY;
+    [SerializeField] float _footSoundTimer;
     float _inputWheel;
     bool _watering = true;
     bool _cutting = false;
     bool _main = true;
     bool _stun;
+    bool _foot;
 
     // Update is called once per frame
     void Update()
     {
         ReadInput();
+
+        FootSound();
 
         ChangeWeapon();
 
@@ -54,8 +66,7 @@ public class UsugiPlayer : MonoBehaviour
     {
         _inputY = Input.GetAxisRaw("Horizontal");
 
-        _inputWheel = Input.GetAxisRaw("Mouse ScrollWheel");
-        
+        _inputWheel = Input.GetAxisRaw("Mouse ScrollWheel"); 
 
         if (_main)
         {
@@ -101,6 +112,7 @@ public class UsugiPlayer : MonoBehaviour
         if(_watering)
         {
             Instantiate(_water, _wateringCan.transform.position, Quaternion.identity);
+            _audioSource.PlayOneShot(_waterSound);
         }
     }
 
@@ -112,7 +124,9 @@ public class UsugiPlayer : MonoBehaviour
 
     IEnumerator StunCoolTime()
     {
+        _hitEffect.SetActive(true);
         yield return new WaitForSeconds(_stunTime);
+        _hitEffect.SetActive(false);
         _stun = false;
     }
 
@@ -120,8 +134,43 @@ public class UsugiPlayer : MonoBehaviour
     {
         if(_cutting)
         {
+            _audioSource.PlayOneShot(_cutSound);
             _onoScripts.Cut();
         }
+    }
+
+    void FootSound()
+    {
+        if (_inputY == 0)
+        {
+            _footSource.Stop();
+            return;
+        }
+
+        if (_foot)
+        {
+            return;
+        }
+
+        if(_inputY != 0)
+        {
+            PlayFootstepSound();
+        }
+
+        StartCoroutine(nameof(FootstepTimer));
+
+    }
+
+    void PlayFootstepSound()
+    {
+        _footSource.PlayOneShot(_footStep);
+    }
+
+    IEnumerator FootstepTimer()
+    {
+        _foot = true;
+        yield return new WaitForSeconds(1);
+        _foot = false;
     }
 
 }

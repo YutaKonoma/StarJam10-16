@@ -15,6 +15,8 @@ public class Tree : MonoBehaviour
     public UsugiGameManager Manager { set => _manager = value; }
     [SerializeField] float _point;
     [SerializeField] float _deadTime;
+    [SerializeField] AudioSource _audioSource;
+    [SerializeField] AudioClip _cutsound;
 
     private void Start()
     {
